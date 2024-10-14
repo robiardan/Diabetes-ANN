@@ -39,6 +39,9 @@ if st.button('Test Prediksi Diabetes'):
         input_data = np.array([[float(Pregnancies), float(Glucose), float(BloodPressure), float(SkinThickness),
                                  float(Insulin), float(BMI), float(DiabetesPedigreeFunction), float(Age)]])
 
+        # Print input data for debugging
+        st.write("Input Data:", input_data)
+
         # Normalisasi input menggunakan scaler yang dimuat
         input_data = scaler.transform(input_data)  # Menggunakan transform daripada fit_transform
 
@@ -52,10 +55,12 @@ if st.button('Test Prediksi Diabetes'):
         else:
             diab_diagnosis = 'Pasien diprediksi tidak terkena Diabetes'
     
-    except ValueError:
-        st.error('Pastikan semua input adalah angka yang valid.')
+    except ValueError as ve:
+        st.error(f'Value Error: {ve}')
+    except IndexError as ie:
+        st.error(f'Index Error: {ie}')
     except Exception as e:
-        st.error(f'Terjadi kesalahan: {e}')
+        st.error(f'An error occurred: {e}')
 
 # Menampilkan hasil di Streamlit
 if diab_diagnosis:
